@@ -8,6 +8,7 @@ import model.RequestDTO;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.OnOverflow;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -19,7 +20,9 @@ import static org.eclipse.microprofile.reactive.messaging.OnOverflow.Strategy.UN
 @ApplicationScoped
 public class RequestService {
 
-    @Channel("requests")
+    private static final Logger log = Logger.getLogger(RequestService.class);
+
+    @Channel("requests-out")
     @OnOverflow(UNBOUNDED_BUFFER)
     Emitter<ConsumerMessage> consumerMessageEmitter;
 
@@ -29,7 +32,9 @@ public class RequestService {
     }
 
     private void sendMessage(ConsumerMessage message) {
+        log.infof("Message created and ready to send: %s", message);
         consumerMessageEmitter.send(message);
+        log.info("Message sent to requests queue!");
     }
 
     private ConsumerMessage createMessage(RequestDTO requestDTO) {
