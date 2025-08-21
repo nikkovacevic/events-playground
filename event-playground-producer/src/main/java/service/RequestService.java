@@ -42,7 +42,7 @@ public class RequestService {
                 UUID.randomUUID(),
                 LocalDateTime.now(),
                 getConsumerEvent(requestDTO.requestAction()),
-                requestDTO.mountain(),
+                requestDTO.mountains(),
                 requestDTO.date(),
                 requestDTO.note());
     }

@@ -1,9 +1,10 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record RequestDTO(
-        String mountain,
+        List<String> mountains,
         LocalDate date,
         String note,
         RequestAction requestAction

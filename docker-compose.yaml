@@ -11,3 +11,19 @@ services:
       - "8161:8161"   # web console (http://localhost:8161, user=quser)
       - "5672:5672"   # AMQP 1.0 (this is what Quarkus will connect to)
       - "61616:61616" # core protocol (you don’t need this, but it’s exposed)
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: quarkus
+      POSTGRES_PASSWORD: quarkus
+      POSTGRES_DB: eventdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

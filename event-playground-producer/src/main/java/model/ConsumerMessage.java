@@ -2,13 +2,14 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public record ConsumerMessage(
         UUID uuid,
         LocalDateTime created,
         EventType eventName,
-        String mountain,
+        List<String> mountains,
         LocalDate date,
         String note
 ) {
