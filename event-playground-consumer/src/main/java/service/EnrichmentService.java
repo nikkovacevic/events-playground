@@ -5,6 +5,7 @@ import jakarta.el.BeanNameELResolver;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import model.DLQMessage;
 import model.EventType;
 import model.Mountain;
 import model.MountainInfo;
@@ -43,9 +44,7 @@ public class EnrichmentService {
     @Incoming("request-validated")
     public void createMountainEntry(Request request) {
         log.infof("Step 3 - %s - Creating mountain entries: %s", request.getRequestUuid(), request);
-        request.getMountains().forEach(mountain ->{
-            mountainTaskEmitter.send(new MountainTask(request.getRequestUuid(), mountain, request.getEventType()));
-        });
+        request.getMountains().forEach(mountain -> mountainTaskEmitter.send(new MountainTask(request.getRequestUuid(), mountain, request.getEventType())));
     }
 
     @Incoming("mountain-enrichment-requested")
